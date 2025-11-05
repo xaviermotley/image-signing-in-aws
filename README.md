@@ -35,3 +35,14 @@ Follow the steps below to reproduce the workflow:
 ## License  
 
 This project is licensed under the MIT License.
+
+## Architecture Diagram  
+
+```mermaid
+graph TD
+    A[Build Container Image] --> B[Sign Image with AWS Signer]
+    B --> C[Push Signed Image to Amazon ECR]
+    C --> D[Verify Signature with Notation CLI]
+    D --> E[Deploy to Kubernetes Cluster]
+    E --> F[Kyverno Policy Enforces Signed Images]
+```
