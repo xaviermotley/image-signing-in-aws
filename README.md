@@ -1,8 +1,6 @@
 # Image Signing in AWS  
 **Container image signing, verification, and attestation with AWS Signer, Notation CLI, Amazon ECR, and Kyverno**  
 
----  
-
 ## 📘 Overview  
 
 This project demonstrates an **end-to-end container image signing and verification workflow** using:  
@@ -14,13 +12,22 @@ This project demonstrates an **end-to-end container image signing and verificati
 
 It showcases a **secure software supply chain** on AWS, from image build to policy enforcement in Kubernetes.  
 
----  
-
 ## 🏗️ Architecture  
 
-```mermaid  
-graph TD  
-    A[Build Container Image] --> B[Sign Image with AWS Signer]  ```
+```mermaid
+graph TD
+    A[Build Container Image] --> B[Sign Image with AWS Signer]
+    B --> C[Push Signed Image to Amazon ECR]
+    C --> D[Verify Signature with Notation CLI]
+    D --> E[Deploy to Kubernetes Cluster]
+    E --> F[Kyverno Policy Enforces Signed Images]
+```
+
+Each step builds on AWS-native and open-source tooling to create a verifiable chain of trust.  
+
+## 📂 Repository Structure  
+
+```
 image-signing-in-aws/
 ├── README.md
 ├── docs/
@@ -42,8 +49,6 @@ image-signing-in-aws/
 └── LICENSE
 ```
 
----  
-
 ## ⚙️ Prerequisites  
 
 - AWS CLI configured with IAM permissions for AWS Signer and ECR  
@@ -52,13 +57,9 @@ image-signing-in-aws/
 - A running Kubernetes cluster  
 - Kyverno installed ([kyverno.io](https://kyverno.io/docs/installation/))  
 
----  
-
 ## 🚀 Getting Started  
 
 ### 1️⃣ Set up AWS Signer Profile  
-
-Create a signing profile and register it in AWS Signer.  
 
 ```bash
 aws signer put-signing-profile \
@@ -90,14 +91,10 @@ notation verify <account-id>.dkr.ecr.<region>.amazonaws.com/demo-app:latest
 
 ### 5️⃣ Apply Kyverno Policies  
 
-Apply Kyverno policies to ensure only signed images can run.  
-
 ```bash
 kubectl apply -f policies/kyverno/require-signed-images.yaml
 kubectl apply -f policies/kyverno/verify-signed-images.yaml
 ```
-
----  
 
 ## 🔒 Kyverno Policy Example  
 
@@ -124,8 +121,6 @@ spec:
             subject: "my-container-signer"
 ```
 
----  
-
 ## 🧩 Example End-to-End Demo Flow  
 
 1. Create the signer profile (`scripts/setup-signer/`)  
@@ -135,13 +130,9 @@ spec:
 5. Deploy to a Kubernetes cluster  
 6. Enforce Kyverno policies to allow only verified images  
 
----  
-
 ## 📄 License  
 
 This project is licensed under the [MIT License](./LICENSE).  
-
----  
 
 ## 🧠 References  
 
@@ -150,15 +141,3 @@ This project is licensed under the [MIT License](./LICENSE).
 - [Kyverno Policies Reference](https://kyverno.io/policies/)  
 - [Nirmata kyverno-notation-aws](https://github.com/nirmata/kyverno-notation-aws)  
 - [AWS Blog: Simplify container signing with AWS Signer and Notation](https://aws.amazon.com/blogs/containers/simplify-container-image-signing-with-aws-signer-and-notation/)
-
-    B --> C[Push Signed Image to Amazon ECR]  
-    C --> D[Verify Signature with Notation CLI]  
-    D --> E[Deploy to Kubernetes Cluster]  
-    E --> F[Kyverno Policy Enforces Signed Images]  
-```  
-
-Each step builds on AWS-native and open-source tooling to create a verifiable chain of trust.  
-
----  
-
-## 📂 Repository Structure
