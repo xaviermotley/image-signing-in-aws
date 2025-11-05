@@ -1,0 +1,19 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-signed-images
+spec:
+  validationFailureAction: enforce
+  rules:
+    - name: verify-image-signature
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      verifyImages:
+        - image: "*"
+          key: "<ARN of AWS Signer signing profile>"
+          attestations:
+            - type: slsa-provenance
+              verifyDigest: true
