@@ -1,6 +1,7 @@
 # Image Signing in AWS  
 **Container image signing, verification, and attestation with AWS Signer, Notation CLI, Amazon ECR, and Kyverno**  
 
+[![Built with AWS Security Lake](https://img.shields.io/badge/Built%20with-AWS%20Security%20Lake-orange?logo=amazonaws)](https://aws.amazon.com/security-lake/) [![OCSF Compliant](https://img.shields.io/badge/Data%20Model-OCSF-blue?logo=data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjZmZmIiB2aWV3Qm94PSIwIDAgMjAgMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiByeD0iMyIgZmlsbD0iIzAwN0JGNCIvPjx0ZXh0IHg9IjUiIHk9IjE1IiBmb250LXNpemU9IjEwIiBmaWxsPSIjZmZmIj5PQzwvdGV4dD48L3N2Zz4=)](https://schema.ocsf.io/) [![Detections-as-Code](https://img.shields.io/badge/CI%2FCD-Detections--as--Code-success?logo=githubactions&logoColor=white)](https://github.com/features/actions) [![Validated with Stratus Red Team](https://img.shields.io/badge/Validated%20with-Stratus%20Red%20Team-critical?logo=firefoxbrowser)](https://stratus-red-team.cloud/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 ## 📘 Overview  
 
 This project demonstrates an **end-to-end container image signing and verification workflow** using:  
