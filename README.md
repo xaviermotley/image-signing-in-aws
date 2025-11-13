@@ -142,3 +142,22 @@ This project is licensed under the [MIT License](./LICENSE).
 - [Kyverno Policies Reference](https://kyverno.io/policies/)  
 - [Nirmata kyverno-notation-aws](https://github.com/nirmata/kyverno-notation-aws)  
 - [AWS Blog: Simplify container signing with AWS Signer and Notation](https://aws.amazon.com/blogs/containers/simplify-container-image-signing-with-aws-signer-and-notation/)
+
+## 📝 Step-by-Step Instructions  
+Follow these steps to sign and verify your container images with AWS Signer, Amazon ECR, Notation CLI, and Kyverno.  
+
+1. **Set up your AWS Signer profile** – Use the AWS CLI to create or select a signing profile for container images.  
+2. **Build your container image** – Build your container image locally using `docker build` (or Podman).  
+3. **Push the image to Amazon ECR** – Authenticate to ECR and push the built image using `aws ecr get-login-password` and `docker push`.  
+4. **Sign the image with Notation** – Use the Notation CLI with the AWS Signer plugin to sign the image:  
+   ```bash  
+   notation sign <account-id>.dkr.ecr.<region>.amazonaws.com/demo-app:latest \  
+     --plugin com.aws.signer.notation.plugin \  
+     --id my-container-signer  
+   ```  
+5. **Verify the image signature** – Verify the signed image using Notation:  
+   ```bash  
+   notation verify <account-id>.dkr.ecr.<region>.amazonaws.com/demo-app:latest \  
+     --plugin com.aws.signer.notation.plugin  
+   ```  
+6. **Deploy to Kubernetes with policy enforcement** – Apply the Kyverno policies in the `policies/kyverno` directory to your Kubernetes cluster to ensure that only signed images are deployed.
